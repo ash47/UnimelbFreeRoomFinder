@@ -2,7 +2,7 @@ Unimelb Free Room Finder
 =======
 
 ###What does this do?###
- - Currently nothing
+ - Caches rooms and buildings at unimelb Parkville campus
 
 ###What's it written in?###
  - The data collection will be written in node.js
