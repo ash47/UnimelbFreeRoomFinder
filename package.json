@@ -1,0 +1,9 @@
+{
+  "name": "UnimelbFreeRoomFinder",
+  "description": "Helps you find a room with no classes booked into it",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+	"cheerio": "*"
+  }
+}
