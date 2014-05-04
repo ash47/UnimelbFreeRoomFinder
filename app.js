@@ -2,7 +2,7 @@
 var httpRequest = require('./httprequest.js');
 
 // Jquery like parser for HTML
-var cheerio = require('cheerio');
+//var cheerio = require('cheerio');
 
 // For writing files
 var fs = require('fs');
@@ -21,6 +21,43 @@ var buildingFileDir = 'buildings/';
 
 // List of buildings left to cache
 var toCache = [];
+
+// Two auth requests first, then real requests
+httpRequest.request({
+    host: 'sws.unimelb.edu.au',
+    path: '/2014/login.aspx?ReturnUrl=/2014/default.aspx'
+}, function(err, content) {
+    if(err) throw err;
+
+    // Another auth request
+    httpRequest.request({
+        host: 'sws.unimelb.edu.au',
+        path: '/2014/login.aspx?ReturnUrl=/2014/showtimetable.aspx'
+    }, function(err, content) {
+        if(err) throw err;
+
+        // Begin real requests
+        httpRequest.request({
+            host: 'sws.unimelb.edu.au',
+            path: '/2014/default.aspx'
+        }, function(err, content) {
+            if(err) throw err;
+
+            console.log(content);
+
+            httpRequest.request({
+                host: 'sws.unimelb.edu.au',
+                path: '/2014/showtimetable.aspx'
+            }, function(err, content) {
+                if(err) throw err;
+
+                console.log(content);
+            });
+        }, 'tLinkType=locationsbyzone&dlObject=278-105&lbWeeks=t&lbDays=1-7&dlPeriod=1-42&dlType=%22Textspreadsheet;SWSMELB%20Location%20Text%20Spreadsheet%22');
+    });
+});
+
+return;
 
 httpRequest.get(buildingDir, function(err, content) {
     if(err) throw err;
